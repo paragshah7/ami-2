@@ -1,17 +1,12 @@
 name: Run packer build
 
 env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   TEST_ENV: ${{ secrets.TEST_ENV }}
   TEST_ENV_2: "Testing env 2"
   TEST_ENV_3: ${{ secrets.TEST_ENV_3 }}
 
 on:
   pull_request:
-  # pull_request_target:
-  #   types: [opened,reopened]
-  # push:
     branches: [ main ]
 
 jobs:
@@ -22,12 +17,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       
-      - name: Packer Build
-        run: packer build -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY_ID}}' -var 'aws_secret_key=${{secrets.AWS_SECRET_ACCESS_KEY}}' -var 'aws_region=${{secrets.AWS_REGION}}' packer-template.json
+      # - name: Packer Build
+      #   run: packer build -var 'aws_access_key=${{secrets.AWS_ACCESS_KEY_ID}}' -var 'aws_secret_key=${{secrets.AWS_SECRET_ACCESS_KEY}}' -var 'aws_region=${{secrets.AWS_REGION}}' packer-template.json
 
-      # - name: Test variables
-      #   run: |
-      #       printenv
+      - name: Test variables
+        run: |
+            printenv
     
       # - name: Packer build
       #   uses: riznob/packer-build-action@v1.1
@@ -42,3 +37,4 @@ jobs:
       #     AWS_SOURCE_AMI: ${{ secrets.AWS_SOURCE_AMI }}
       #     AWS_PROD_ACCOUNT_ID: ${{ secrets.AWS_PROD_ACCOUNT_ID }}
       #     packer-template.json
+
